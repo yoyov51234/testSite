@@ -1,0 +1,43 @@
+package utils;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class DriverFactory {
+    public static String downloadDir = System.getProperty("user.dir") + "/downloads";
+
+    private void DriverFactory() {
+
+    }
+
+    public static WebDriver createDriver() {
+
+        String browser = ConfigReader.getProperty("browser");
+        if (browser.equalsIgnoreCase("chrome")) {
+
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions options = new ChromeOptions();
+//            options.addArguments("--no-sandbox");
+            //set the mode here
+            Map<String, Object> prefs = new HashMap<>();
+            prefs.put("download.default_directory", downloadDir);
+            prefs.put("download.prompt_for_download", false);
+            options.setExperimentalOption("prefs", prefs);
+
+            return new ChromeDriver(options);
+
+        } else   {
+            WebDriverManager.firefoxdriver().setup();
+            return new FirefoxDriver();
+        }
+
+    }
+
+
+}
