@@ -15,7 +15,7 @@ import java.util.Map;
 public class DriverFactory {
     public static String downloadDir = System.getProperty("user.dir") + "/downloads";
 
-    private void DriverFactory() {
+    private DriverFactory() {
 
     }
 
