@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
@@ -44,7 +45,10 @@ public class DriverFactory {
         if(onHub.equals("true")){
             try{
 
-                return new RemoteWebDriver(new URL(hubUrl), options);
+                RemoteWebDriver remoteDriver=   new RemoteWebDriver(new URL(hubUrl), options);
+                (remoteDriver).setFileDetector(new LocalFileDetector());
+
+                return remoteDriver;
 
             } catch (MalformedURLException e) {
                 throw new RuntimeException("Invalid hub URL: " + hubUrl, e);
