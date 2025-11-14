@@ -46,7 +46,7 @@ public class DriverFactory {
             try{
 
                 RemoteWebDriver remoteDriver=   new RemoteWebDriver(new URL(hubUrl), options);
-                (remoteDriver).setFileDetector(new LocalFileDetector());
+//                (remoteDriver).setFileDetector(new LocalFileDetector());
 
                 return remoteDriver;
 
