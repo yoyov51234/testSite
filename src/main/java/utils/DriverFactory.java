@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DriverFactory {
-    public static String downloadDir = System.getProperty("user.dir") + "/downloads";
+    public static String downloadDir = System.getProperty("downloadDir", ConfigReader.getProperty("downloadDir"));
 
     private DriverFactory() {
 
@@ -30,7 +30,6 @@ public class DriverFactory {
         ChromeOptions options = new ChromeOptions();
 //            options.addArguments("--no-sandbox");
         //set the mode here
-        options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
@@ -44,7 +43,7 @@ public class DriverFactory {
 
         if(onHub.equals("true")){
             try{
-
+                options.addArguments("--headless=new");
                 RemoteWebDriver remoteDriver=   new RemoteWebDriver(new URL(hubUrl), options);
 //                (remoteDriver).setFileDetector(new LocalFileDetector());
 
