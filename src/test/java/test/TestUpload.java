@@ -11,7 +11,7 @@ public class TestUpload extends BaseTest {
     public void testUpload() throws  Exception {
         WebDriver driver = MDriverManager.getDriver();
         driver.get("https://demo.automationtesting.in/Register.html");
-        String filePath = System.getProperty("user.dir")+"src/test/resources/fileToUpload.json";
+        String filePath = System.getProperty("user.dir")+"/src/test/resources/fileToUpload.json";
         driver.findElement(By.xpath("//input[@id='imagesrc']")).sendKeys(filePath);
 
 

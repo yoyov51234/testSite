@@ -19,13 +19,30 @@ public class TestDownload extends BaseTest {
         driver.get("https://demo.automationtesting.in/FileDownload.html");
         driver.findElement(By.xpath("//textarea[@id='textbox']")).sendKeys("nihao");
 
-        File file = new File(downloadDir);
-        if (!file.exists()) file.delete();
+        // 创建下载目录
+        File dir = new File(downloadDir);
+        if (!dir.exists()) dir.mkdirs();
+
+        File targetFile = new File(downloadDir + "/info.txt");
+
         driver.findElement(By.xpath("//button[@id='createTxt']")).click();
         driver.findElement(By.xpath("//a[@id='link-to-download']")).click();
 
-        file = new File(System.getProperty("user.dir") + "/downloads/info.txt");
-        String s = FileUtils.readFileToString(file, "UTF-8");
+        targetFile = new File(System.getProperty("user.dir") + "/downloads/info.txt");
+
+        // 等待文件下载完成
+        int timeout = 10; // seconds
+        int waited = 0;
+        while (!targetFile.exists() && waited < timeout) {
+            Thread.sleep(1000);
+            waited++;
+        }
+
+        if (!targetFile.exists()) {
+            throw new RuntimeException("Download failed: info.txt not found in " + targetFile.getAbsolutePath());
+
+        }
+        String s = FileUtils.readFileToString(targetFile, "UTF-8");
         Assert.assertEquals(s,"nihao");
 
 
